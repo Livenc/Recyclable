@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class App {
     // объявите поле для ссылки на карту (англ. map link)
-    String link = "https://recyclemap.ru/";
+    public static final String maplink = "https://recyclemap.ru/";
     public static final List<RecyclableMaterial> materials = getMaterials();
     public static final Map<MaterialType, String> containers = getContainers();
 
@@ -15,9 +15,19 @@ public class App {
         printMenu();
         
         String commandValue = scanner.nextLine();
-
-        swithc (commandValue){
-            case 
+        
+        switch (ChatCommand.valueOf(commandValue)){
+            case ChatCommand.MAP:
+            System.out.println(maplink);
+            break;
+            case ChatCommand.RECYCLABILITY:
+            System.out.println("Введите код переробки: ");
+            String commandValueInt = scanner.nextLine();
+            isRecycled(Integer.parseInt(commandValueInt));
+            case ChatCommand.BONUS:
+            System.out.println("Введите количество вторсырья, кг: ");
+            String commandValueIntKG = scanner.nextLine();
+            System.out.println("Количество бонусных баллов: "  + bonus(Integer.parseInt(commandValueIntKG)) );
         }
         /* в зависимости от команды выполните следующие действия:
            map - вывести на экран ссылку на карту;
@@ -31,6 +41,13 @@ public class App {
                    4. вывести сообщение "Количество бонусных баллов: <баллы>."
         */
         
+    }
+    public static int  bonus(int valueKG){
+        if(10<valueKG){
+            return valueKG * 10;
+        }else{
+            return valueKG*15;
+        }
     }
 
     // добавьте модификаторы в заголовок метода
